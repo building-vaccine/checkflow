@@ -28,23 +28,29 @@ export default function Home() {
     setTodos(data ?? []);
   }
 
-  async function addTodo() {
-    if (!text.trim()) return;
+async function addTodo() {
+  const value = text.trim();
 
-    const { error } = await supabase.from("todos").insert({
-      text,
+  if (!value) return;
+
+  const { data, error } = await supabase
+    .from("todos")
+    .insert({
+      text: value,
       checked: false,
-    });
+    })
+    .select()
+    .single();
 
-    if (error) {
-      console.error(error);
-      alert("追加に失敗しました。");
-      return;
-    }
-
-    setText("");
-    loadTodos();
+  if (error) {
+    console.error(error);
+    alert("追加に失敗しました。");
+    return;
   }
+
+  setTodos((prev) => [...prev, data]);
+  setText("");
+}
 
   async function toggleTodo(todo: Todo) {
     const { error } = await supabase
