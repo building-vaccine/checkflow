@@ -4,12 +4,14 @@ type TodoListProps = {
   todos: Todo[];
   toggleTodo: (todo: Todo) => void;
   deleteTodo: (id: number) => void;
+  startEdit: (todo: Todo) => void;
 };
 
 export default function TodoList({
   todos,
   toggleTodo,
   deleteTodo,
+  startEdit,
 }: TodoListProps) {
   if (todos.length === 0) {
     return (
@@ -48,6 +50,7 @@ export default function TodoList({
 
           <div className="ml-4 flex gap-2">
             <button
+              onClick={() => startEdit(todo)}
               className="rounded px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
             >
               ✏️

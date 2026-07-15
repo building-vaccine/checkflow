@@ -7,8 +7,10 @@ import { supabase } from "@/lib/supabase";
 import type { Todo } from "@/types/todo";
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+const [text, setText] = useState("");
+const [todos, setTodos] = useState<Todo[]>([]);
+const [editingId, setEditingId] = useState<number | null>(null);
+const [editingText, setEditingText] = useState("");
 
   useEffect(() => {
     loadTodos();
@@ -87,6 +89,36 @@ async function addTodo() {
     loadTodos();
   }
 
+  async function updateTodo() {
+    if (editingId === null) return;
+
+    const value = editingText.trim();
+
+    if (!value) return;
+
+    const { error } = await supabase
+      .from("todos")
+      .update({
+        text: value,
+      })
+      .eq("id", editingId);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setEditingId(null);
+    setEditingText("");
+
+    loadTodos();
+  }
+
+  function startEdit(todo: Todo) {
+    setEditingId(todo.id);
+    setEditingText(todo.text);
+  }
+
   return (
     <main className="min-h-screen bg-slate-100 py-12 px-6">
       <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-lg">
@@ -108,6 +140,7 @@ async function addTodo() {
           todos={todos}
           toggleTodo={toggleTodo}
           deleteTodo={deleteTodo}
+          startEdit={startEdit}
         />
       </div>
     </main>
