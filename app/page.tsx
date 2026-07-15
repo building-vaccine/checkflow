@@ -136,6 +136,39 @@ async function addTodo() {
           addTodo={addTodo}
         />
 
+        {editingId !== null && (
+          <div className="mt-6 rounded-lg border bg-slate-50 p-4">
+            <h2 className="mb-3 font-semibold">
+              項目を編集
+            </h2>
+
+            <div className="flex gap-3">
+              <input
+                value={editingText}
+                onChange={(e) => setEditingText(e.target.value)}
+                className="flex-1 rounded-lg border px-4 py-2"
+              />
+
+              <button
+                onClick={updateTodo}
+                className="rounded-lg bg-green-600 px-5 py-2 text-white hover:bg-green-700"
+              >
+                保存
+              </button>
+
+              <button
+                onClick={() => {
+                  setEditingId(null);
+                  setEditingText("");
+                }}
+                className="rounded-lg bg-slate-300 px-5 py-2 hover:bg-slate-400"
+              >
+                キャンセル
+              </button>
+            </div>
+          </div>
+        )}
+
         <TodoList
           todos={todos}
           toggleTodo={toggleTodo}
