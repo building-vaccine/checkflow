@@ -1,5 +1,6 @@
 "use client";
 
+import { getBrowserId } from "@/lib/browserId";
 import { useEffect, useState } from "react";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
@@ -22,6 +23,7 @@ const [editingText, setEditingText] = useState("");
     const { data, error } = await supabase
       .from("todos")
       .select("*")
+      .eq("browser_id", getBrowserId())
       .order("created_at", { ascending: true });
 
     if (error) {
@@ -47,6 +49,7 @@ async function addTodo() {
     .insert({
       text: value,
       checked: false,
+      browser_id: getBrowserId(),
     })
     .select()
     .single();
@@ -103,52 +106,6 @@ async function addTodo() {
     }
 
     loadTodos();
-  }
-
-  function exportTodos() {
-    const blob = new Blob(
-      [JSON.stringify(todos, null, 2)],
-      { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "checkflow-backup.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
-  }
-
-  async function importTodos(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = event.target.files?.[0];
-
-    if (!file) return;
-
-    const text = await file.text();
-    let importedTodos;
-
-    try {
-      importedTodos = JSON.parse(text);
-    } catch (error) {
-      console.error(error);
-      alert("JSONファイルの形式が正しくありません。");
-      return;
-    }
-
-    for (const todo of importedTodos) {
-      await supabase.from("todos").insert({
-        text: todo.text,
-        checked: todo.checked,
-      });
-    }
-
-    loadTodos();
-
-    event.target.value = "";
   }
 
   async function updateTodo() {
@@ -293,23 +250,6 @@ async function addTodo() {
             完了した項目を削除
           </button>
         </div>
-
-        <button
-          onClick={exportTodos}
-          className="rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-        >
-          エクスポート
-        </button>
-
-        <label className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-          インポート
-          <input
-            type="file"
-            accept=".json"
-            onChange={importTodos}
-            className="hidden"
-          />
-        </label>
 
         <TodoList
           todos={filteredTodos}
