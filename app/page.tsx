@@ -92,18 +92,34 @@ async function addTodo() {
   }
 
   async function deleteCompletedTodos() {
-  const { error } = await supabase
-    .from("todos")
-    .delete()
-    .eq("checked", true);
+    const { error } = await supabase
+      .from("todos")
+      .delete()
+      .eq("checked", true);
 
-  if (error) {
-    console.error(error);
-    return;
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    loadTodos();
   }
 
-  loadTodos();
-}
+  function exportTodos() {
+    const blob = new Blob(
+      [JSON.stringify(todos, null, 2)],
+      { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "checkflow-backup.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
 
   async function updateTodo() {
     if (editingId === null) return;
@@ -239,7 +255,7 @@ async function addTodo() {
           </div>
         )}
 
-        <div className="mt-6 flex justify-end">
+        <div className="mt-6 flex justify-end gap-2">
           <button
             onClick={deleteCompletedTodos}
             className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
@@ -247,6 +263,13 @@ async function addTodo() {
             完了した項目を削除
           </button>
         </div>
+
+        <button
+          onClick={exportTodos}
+          className="rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+        >
+          エクスポート
+        </button>
 
         <TodoList
           todos={filteredTodos}
