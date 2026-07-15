@@ -28,7 +28,7 @@ export default function TodoList({
           key={todo.id}
           className="flex items-center justify-between rounded-lg border p-4"
         >
-          <label className="flex items-center gap-3">
+          <label className="flex items-center gap-3 flex-1">
             <input
               type="checkbox"
               checked={todo.checked}
@@ -38,20 +38,28 @@ export default function TodoList({
             <span
               className={
                 todo.checked
-                  ? "text-slate-400 line-through"
-                  : ""
+                  ? "flex-1 text-slate-400 line-through"
+                  : "flex-1"
               }
             >
               {todo.text}
             </span>
           </label>
 
-          <button
-            onClick={() => deleteTodo(todo.id)}
-            className="text-red-500 hover:text-red-700"
-          >
-            🗑
-          </button>
+          <div className="ml-4 flex gap-2">
+            <button
+              className="rounded px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
+            >
+              ✏️
+            </button>
+
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="rounded px-2 py-1 text-sm text-red-500 hover:bg-red-50"
+            >
+              🗑
+            </button>
+          </div>
         </div>
       ))}
     </div>
