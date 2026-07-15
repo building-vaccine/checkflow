@@ -121,6 +121,36 @@ async function addTodo() {
     URL.revokeObjectURL(url);
   }
 
+  async function importTodos(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    const text = await file.text();
+    let importedTodos;
+
+    try {
+      importedTodos = JSON.parse(text);
+    } catch (error) {
+      console.error(error);
+      alert("JSONファイルの形式が正しくありません。");
+      return;
+    }
+
+    for (const todo of importedTodos) {
+      await supabase.from("todos").insert({
+        text: todo.text,
+        checked: todo.checked,
+      });
+    }
+
+    loadTodos();
+
+    event.target.value = "";
+  }
+
   async function updateTodo() {
     if (editingId === null) return;
 
@@ -270,6 +300,16 @@ async function addTodo() {
         >
           エクスポート
         </button>
+
+        <label className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+          インポート
+          <input
+            type="file"
+            accept=".json"
+            onChange={importTodos}
+            className="hidden"
+          />
+        </label>
 
         <TodoList
           todos={filteredTodos}
