@@ -70,7 +70,8 @@ async function addTodo() {
       .update({
         checked: !todo.checked,
       })
-      .eq("id", todo.id);
+      .eq("id", todo.id)
+      .eq("browser_id", getBrowserId());
 
     if (error) {
       console.error(error);
@@ -84,7 +85,8 @@ async function addTodo() {
     const { error } = await supabase
       .from("todos")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .eq("browser_id", getBrowserId());
 
     if (error) {
       console.error(error);
@@ -120,7 +122,8 @@ async function addTodo() {
       .update({
         text: value,
       })
-      .eq("id", editingId);
+      .eq("id", editingId)
+      .eq("browser_id", getBrowserId());
 
     if (error) {
       console.error(error);
