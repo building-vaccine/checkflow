@@ -9,6 +9,7 @@ import type { Todo } from "@/types/todo";
 export default function Home() {
 const [text, setText] = useState("");
 const [todos, setTodos] = useState<Todo[]>([]);
+const [searchText, setSearchText] = useState("");
 const [editingId, setEditingId] = useState<number | null>(null);
 const [editingText, setEditingText] = useState("");
 
@@ -136,6 +137,10 @@ async function addTodo() {
   const completedCount = todos.filter((todo) => todo.checked).length;
   const totalCount = todos.length;
 
+  const filteredTodos = todos.filter((todo) =>
+    todo.text.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <main className="min-h-screen bg-slate-100 py-12 px-6">
       <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-lg">
@@ -156,6 +161,15 @@ async function addTodo() {
           setText={setText}
           addTodo={addTodo}
         />
+
+        <div className="mt-6">
+          <input
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="項目を検索..."
+            className="w-full rounded-lg border px-4 py-3"
+          />
+        </div>
 
         {editingId !== null && (
           <div className="mt-6 rounded-lg border bg-slate-50 p-4">
@@ -200,7 +214,7 @@ async function addTodo() {
         </div>
 
         <TodoList
-          todos={todos}
+          todos={filteredTodos}
           toggleTodo={toggleTodo}
           deleteTodo={deleteTodo}
           startEdit={startEdit}
