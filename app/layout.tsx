@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   ],
   applicationName: "CheckFlow",
   authors: [{ name: "building-vaccine" }],
+  verification: {
+    google: "VyGnAUfAjlUAgwsKAvp6BwKQNTe8OTzz0e2m_lArjKM",
+  },
 };
 
 export default function RootLayout({
