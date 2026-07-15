@@ -133,6 +133,9 @@ async function addTodo() {
     setEditingText(todo.text);
   }
 
+  const completedCount = todos.filter((todo) => todo.checked).length;
+  const totalCount = todos.length;
+
   return (
     <main className="min-h-screen bg-slate-100 py-12 px-6">
       <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-lg">
@@ -142,6 +145,10 @@ async function addTodo() {
 
         <p className="mt-2 text-slate-600">
           シンプルなチェックリスト
+        </p>
+
+        <p className="mt-2 text-sm text-slate-500">
+          {totalCount}件中 {completedCount}件完了
         </p>
 
         <TodoForm
