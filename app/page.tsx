@@ -89,6 +89,20 @@ async function addTodo() {
     loadTodos();
   }
 
+  async function deleteCompletedTodos() {
+  const { error } = await supabase
+    .from("todos")
+    .delete()
+    .eq("checked", true);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  loadTodos();
+}
+
   async function updateTodo() {
     if (editingId === null) return;
 
@@ -168,6 +182,15 @@ async function addTodo() {
             </div>
           </div>
         )}
+
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={deleteCompletedTodos}
+            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+          >
+            完了した項目を削除
+          </button>
+        </div>
 
         <TodoList
           todos={todos}
