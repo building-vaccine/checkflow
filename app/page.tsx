@@ -1,45 +1,84 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Todo = {
   id: number;
   text: string;
   checked: boolean;
+  created_at: string;
 };
 
 export default function Home() {
   const [text, setText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addTodo = () => {
+  useEffect(() => {
+    loadTodos();
+  }, []);
+
+  async function loadTodos() {
+    const { data, error } = await supabase
+      .from("todos")
+      .select("*")
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setTodos(data ?? []);
+  }
+
+  async function addTodo() {
     if (!text.trim()) return;
 
-    setTodos([
-      ...todos,
-      {
-        id: Date.now(),
-        text,
-        checked: false,
-      },
-    ]);
+    const { error } = await supabase.from("todos").insert({
+      text,
+      checked: false,
+    });
+
+    if (error) {
+      console.error(error);
+      alert("追加に失敗しました。");
+      return;
+    }
 
     setText("");
-  };
+    loadTodos();
+  }
 
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, checked: !todo.checked }
-          : todo
-      )
-    );
-  };
+  async function toggleTodo(todo: Todo) {
+    const { error } = await supabase
+      .from("todos")
+      .update({
+        checked: !todo.checked,
+      })
+      .eq("id", todo.id);
 
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    loadTodos();
+  }
+
+  async function deleteTodo(id: number) {
+    const { error } = await supabase
+      .from("todos")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    loadTodos();
+  }
 
   return (
     <main className="min-h-screen bg-slate-100 py-12 px-6">
@@ -59,56 +98,58 @@ export default function Home() {
             placeholder="項目を入力"
             className="flex-1 rounded-lg border px-4 py-3"
             onKeyDown={(e) => {
-              if (e.key === "Enter") addTodo();
+              if (e.key === "Enter") {
+                addTodo();
+              }
             }}
           />
 
           <button
             onClick={addTodo}
-            className="rounded-lg bg-blue-600 px-6 text-white hover:bg-blue-700"
+            className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
           >
             追加
           </button>
         </div>
 
         <div className="mt-8 space-y-3">
-          {todos.length === 0 && (
+          {todos.length === 0 ? (
             <p className="text-slate-500">
               まだ項目がありません。
             </p>
-          )}
-
-          {todos.map((todo) => (
-            <div
-              key={todo.id}
-              className="flex items-center justify-between rounded-lg border p-4"
-            >
-              <label className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={todo.checked}
-                  onChange={() => toggleTodo(todo.id)}
-                />
-
-                <span
-                  className={
-                    todo.checked
-                      ? "line-through text-slate-400"
-                      : ""
-                  }
-                >
-                  {todo.text}
-                </span>
-              </label>
-
-              <button
-                onClick={() => deleteTodo(todo.id)}
-                className="text-red-500 hover:text-red-700"
+          ) : (
+            todos.map((todo) => (
+              <div
+                key={todo.id}
+                className="flex items-center justify-between rounded-lg border p-4"
               >
-                🗑
-              </button>
-            </div>
-          ))}
+                <label className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={todo.checked}
+                    onChange={() => toggleTodo(todo)}
+                  />
+
+                  <span
+                    className={
+                      todo.checked
+                        ? "text-slate-400 line-through"
+                        : ""
+                    }
+                  >
+                    {todo.text}
+                  </span>
+                </label>
+
+                <button
+                  onClick={() => deleteTodo(todo.id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  🗑
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </main>
