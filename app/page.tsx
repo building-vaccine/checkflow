@@ -25,7 +25,12 @@ export default function Home() {
       return;
     }
 
-    setTodos(data ?? []);
+    setTodos(
+      (data ?? []).sort((a, b) => {
+        if (a.checked === b.checked) return 0;
+        return a.checked ? 1 : -1;
+      })
+    );
   }
 
 async function addTodo() {
