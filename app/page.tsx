@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import TodoForm from "@/components/TodoForm";
+import TodoList from "@/components/TodoList";
 import { supabase } from "@/lib/supabase";
 import type { Todo } from "@/types/todo";
-import TodoForm from "@/components/TodoForm";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -92,45 +93,11 @@ export default function Home() {
           addTodo={addTodo}
         />
 
-        <div className="mt-8 space-y-3">
-          {todos.length === 0 ? (
-            <p className="text-slate-500">
-              まだ項目がありません。
-            </p>
-          ) : (
-            todos.map((todo) => (
-              <div
-                key={todo.id}
-                className="flex items-center justify-between rounded-lg border p-4"
-              >
-                <label className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={todo.checked}
-                    onChange={() => toggleTodo(todo)}
-                  />
-
-                  <span
-                    className={
-                      todo.checked
-                        ? "text-slate-400 line-through"
-                        : ""
-                    }
-                  >
-                    {todo.text}
-                  </span>
-                </label>
-
-                <button
-                  onClick={() => deleteTodo(todo.id)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  🗑
-                </button>
-              </div>
-            ))
-          )}
-        </div>
+        <TodoList
+          todos={todos}
+          toggleTodo={toggleTodo}
+          deleteTodo={deleteTodo}
+        />
       </div>
     </main>
   );
