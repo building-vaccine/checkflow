@@ -2,13 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-
-type Todo = {
-  id: number;
-  text: string;
-  checked: boolean;
-  created_at: string;
-};
+import type { Todo } from "@/types/todo";
+import TodoForm from "@/components/TodoForm";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -91,26 +86,11 @@ export default function Home() {
           シンプルなチェックリスト
         </p>
 
-        <div className="mt-8 flex gap-3">
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="項目を入力"
-            className="flex-1 rounded-lg border px-4 py-3"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                addTodo();
-              }
-            }}
-          />
-
-          <button
-            onClick={addTodo}
-            className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
-          >
-            追加
-          </button>
-        </div>
+        <TodoForm
+          text={text}
+          setText={setText}
+          addTodo={addTodo}
+        />
 
         <div className="mt-8 space-y-3">
           {todos.length === 0 ? (
