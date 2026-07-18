@@ -291,11 +291,6 @@ async function addTodo() {
           </ul>
         </section>  
       </div>
-      <footer className="mt-10 border-t pt-6 text-center text-sm text-slate-500">
-        <a href="/privacy" className="hover:underline">
-          プライバシーポリシー
-        </a>
-      </footer>
     </main>
   );
 }

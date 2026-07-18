@@ -33,6 +33,35 @@ export const metadata: Metadata = {
   verification: {
     google: "VyGnAUfAjlUAgwsKAvp6BwKQNTe8OTzz0e2m_lArjKM",
   },
+  metadataBase: new URL("https://checkflow.vercel.app"),
+  openGraph: {
+    title: "CheckFlow",
+    description:
+      "無料で使えるシンプルなオンラインチェックリスト。買い物、旅行、引っ越しなどのタスク管理に最適です。",
+    url: "https://あなたのドメイン",
+    siteName: "CheckFlow",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CheckFlow",
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CheckFlow",
+    description:
+      "無料で使えるシンプルなオンラインチェックリスト。",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -59,7 +88,29 @@ export default function RootLayout({
       </Script>
 
       <body className="min-h-full flex flex-col bg-slate-100">
-        {children}
+        <main className="flex-1">
+          {children}
+        </main>
+
+        <footer className="border-t bg-white py-6">
+          <div className="mx-auto flex max-w-5xl justify-center gap-6 text-sm text-slate-600">
+            <a href="/privacy" className="hover:underline">
+              プライバシーポリシー
+            </a>
+
+            <a href="/terms" className="hover:underline">
+              利用規約
+            </a>
+
+            <a href="/contact" className="hover:underline">
+              お問い合わせ
+            </a>
+          </div>
+
+          <p className="mt-4 text-center text-xs text-slate-400">
+            © {new Date().getFullYear()} CheckFlow
+          </p>
+        </footer>
       </body>
     </html>
   );
