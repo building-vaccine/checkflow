@@ -41,7 +41,7 @@ export default function TodoList({
               className={
                 todo.checked
                   ? "flex-1 text-slate-400 line-through"
-                  : "flex-1"
+                  : "flex-1 text-slate-900"
               }
             >
               {todo.text}
