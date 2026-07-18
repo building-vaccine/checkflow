@@ -28,13 +28,14 @@ export default function TodoList({
       {todos.map((todo) => (
         <div
           key={todo.id}
-          className="flex items-center justify-between rounded-lg border p-4"
+          className="flex items-center justify-between rounded-lg border border-slate-300 bg-white p-4"
         >
-          <label className="flex items-center gap-3 flex-1">
+          <label className="flex flex-1 items-center gap-3">
             <input
               type="checkbox"
               checked={todo.checked}
               onChange={() => toggleTodo(todo)}
+              className="h-5 w-5 cursor-pointer accent-blue-600"
             />
 
             <span
@@ -51,14 +52,16 @@ export default function TodoList({
           <div className="ml-4 flex gap-2">
             <button
               onClick={() => startEdit(todo)}
-              className="rounded px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
+              className="rounded-md px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
+              title="編集"
             >
               ✏️
             </button>
 
             <button
               onClick={() => deleteTodo(todo.id)}
-              className="rounded px-2 py-1 text-sm text-red-500 hover:bg-red-50"
+              className="rounded-md px-2 py-1 text-sm text-red-600 hover:bg-red-50"
+              title="削除"
             >
               🗑
             </button>

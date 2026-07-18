@@ -160,8 +160,8 @@ async function addTodo() {
   });
 
   return (
-    <main className="min-h-screen bg-slate-100 py-12 px-6">
-      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-lg">
+    <main className="min-h-screen bg-slate-100 px-6 py-12">
+      <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
         <h1 className="text-3xl font-bold text-slate-900">
           CheckFlow
         </h1>
@@ -185,36 +185,48 @@ async function addTodo() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="項目を検索..."
-            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-500"
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
           />
         </div>
 
         <div className="mt-4 flex gap-2">
           <button
             onClick={() => setFilter("all")}
-            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            className={
+              filter === "all"
+                ? "rounded-lg bg-blue-600 px-3 py-2 text-white"
+                : "rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            }
           >
             すべて
           </button>
 
           <button
             onClick={() => setFilter("active")}
-            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            className={
+              filter === "active"
+                ? "rounded-lg bg-blue-600 px-3 py-2 text-white"
+                : "rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            }
           >
             未完了
           </button>
 
           <button
             onClick={() => setFilter("completed")}
-            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            className={
+              filter === "completed"
+                ? "rounded-lg bg-blue-600 px-3 py-2 text-white"
+                : "rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
+            }
           >
             完了
           </button>
         </div>
 
         {editingId !== null && (
-          <div className="mt-6 rounded-lg border bg-slate-50 p-4">
-            <h2 className="mb-3 font-semibold">
+          <div className="mt-6 rounded-lg border border-slate-300 bg-white p-4">
+            <h2 className="mb-3 font-semibold text-slate-900">
               項目を編集
             </h2>
 
@@ -222,12 +234,12 @@ async function addTodo() {
               <input
                 value={editingText}
                 onChange={(e) => setEditingText(e.target.value)}
-                className="flex-1 rounded-lg border px-4 py-2"
+                className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
               />
 
               <button
                 onClick={updateTodo}
-                className="rounded-lg bg-green-600 px-5 py-2 text-white hover:bg-green-700"
+                className="rounded-lg bg-green-600 px-5 py-2 font-semibold text-white hover:bg-green-700"
               >
                 保存
               </button>
@@ -237,7 +249,7 @@ async function addTodo() {
                   setEditingId(null);
                   setEditingText("");
                 }}
-                className="rounded-lg bg-slate-300 px-5 py-2 hover:bg-slate-400"
+                className="rounded-lg bg-slate-300 px-5 py-2 font-semibold text-slate-900 hover:bg-slate-400"
               >
                 キャンセル
               </button>
@@ -261,7 +273,7 @@ async function addTodo() {
           startEdit={startEdit}
         />
 
-        <section className="mt-12 border-t pt-8">
+        <section className="mt-12 border-t border-slate-300 pt-8">
           <h2 className="text-2xl font-bold text-slate-900">
             CheckFlowとは
           </h2>
@@ -289,7 +301,7 @@ async function addTodo() {
             <li>スマホ・PC対応</li>
             <li>シンプルで使いやすいデザイン</li>
           </ul>
-        </section>  
+        </section>
       </div>
     </main>
   );

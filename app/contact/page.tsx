@@ -6,7 +6,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-slate-100 px-6 py-12">
-      <div className="mx-auto max-w-3xl rounded-2xl bg-white p-8 shadow-lg">
+      <div className="mx-auto max-w-3xl rounded-2xl border border-slate-300 bg-white p-8 shadow-lg">
         <h1 className="text-3xl font-bold text-slate-900">
           お問い合わせ
         </h1>
@@ -20,14 +20,14 @@ export default function ContactPage() {
           下記メールアドレスまでお気軽にお問い合わせください。
         </p>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-6">
+        <div className="mt-8 rounded-xl border border-slate-300 bg-white p-6">
           <h2 className="text-lg font-semibold text-slate-900">
             お問い合わせ先
           </h2>
 
           <a
             href="mailto:building.vaccine@gmail.com"
-            className="mt-3 inline-block text-blue-600 hover:underline"
+            className="mt-3 inline-block break-all font-medium text-blue-600 hover:text-blue-700 hover:underline"
           >
             building.vaccine@gmail.com
           </a>

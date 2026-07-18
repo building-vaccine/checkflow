@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "CheckFlow",
     description:
       "無料で使えるシンプルなオンラインチェックリスト。買い物、旅行、引っ越しなどのタスク管理に最適です。",
-    url: "https://あなたのドメイン",
+    url: "https://checkflow.vercel.app",
     siteName: "CheckFlow",
     images: [
       {
@@ -92,7 +92,7 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="border-t bg-white py-6">
+        <footer className="border-t border-slate-300 bg-white py-6">
           <div className="mx-auto flex max-w-5xl justify-center gap-6 text-sm text-slate-600">
             <a href="/privacy" className="hover:underline">
               プライバシーポリシー
