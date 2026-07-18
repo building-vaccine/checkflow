@@ -260,6 +260,36 @@ async function addTodo() {
           deleteTodo={deleteTodo}
           startEdit={startEdit}
         />
+
+        <section className="mt-12 border-t pt-8">
+          <h2 className="text-2xl font-bold text-slate-900">
+            CheckFlowとは
+          </h2>
+
+          <p className="mt-4 leading-8 text-slate-700">
+            CheckFlowは、ログイン不要で使える無料のオンラインチェックリストです。
+            買い物リスト、旅行の持ち物、引っ越し準備、仕事や日常のタスク管理など、
+            思いついたことをすぐに記録できます。
+          </p>
+
+          <p className="mt-4 leading-8 text-slate-700">
+            会員登録は必要ありません。
+            ブラウザごとにデータを保存するため、アクセスした瞬間から利用できます。
+            パソコン・スマートフォンのどちらでも快適に利用できます。
+          </p>
+
+          <h2 className="mt-10 text-2xl font-bold text-slate-900">
+            主な特徴
+          </h2>
+
+          <ul className="mt-4 list-disc space-y-2 pl-6 text-slate-700">
+            <li>ログイン不要</li>
+            <li>完全無料</li>
+            <li>チェック・編集・削除に対応</li>
+            <li>スマホ・PC対応</li>
+            <li>シンプルで使いやすいデザイン</li>
+          </ul>
+        </section>  
       </div>
       <footer className="mt-10 border-t pt-6 text-center text-sm text-slate-500">
         <a href="/privacy" className="hover:underline">
