@@ -1,4 +1,4 @@
-import type { Todo } from "@/types/todo";
+import type { Todo } from "@/src/types/todo";
 
 type TodoListProps = {
   todos: Todo[];

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Checklist } from "@/data/checklists";
+import type { Checklist } from "@/src/data/checklists";
 
 type Props = {
     checklist: Checklist;
