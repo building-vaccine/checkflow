@@ -1,0 +1,35 @@
+import type { Checklist } from "./types";
+
+export const disasterChecklists: Checklist[] = [
+    {
+        slug: "disaster",
+        category: "disaster",
+        emoji: "🎒",
+        title: "防災",
+        shortDescription: "災害への備えを確認できる防災チェックリスト",
+        seoTitle: "防災チェックリスト",
+        seoDescription: "無料で使える防災チェックリスト。非常食や避難用品など、災害への備えを確認できます。",
+        items: [
+            "飲料水",
+            "非常食",
+            "缶詰",
+            "レトルト食品",
+            "懐中電灯",
+            "乾電池",
+            "モバイルバッテリー",
+            "携帯ラジオ",
+            "救急セット",
+            "常備薬",
+            "マスク",
+            "消毒液",
+            "ティッシュ",
+            "トイレットペーパー",
+            "ウェットティッシュ",
+            "軍手",
+            "タオル",
+            "レインコート",
+            "毛布",
+            "笛（ホイッスル）",
+        ],
+    },
+];

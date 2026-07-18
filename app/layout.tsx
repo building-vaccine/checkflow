@@ -1,4 +1,5 @@
 import Script from "next/script";
+import Link from "next/link";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -92,22 +93,80 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="border-t border-slate-300 bg-white py-6">
-          <div className="mx-auto flex max-w-5xl justify-center gap-6 text-sm text-slate-600">
-            <a href="/privacy" className="hover:underline">
-              プライバシーポリシー
-            </a>
+        <footer className="border-t bg-white py-10">
+          <div className="mx-auto grid max-w-5xl gap-10 px-6 md:grid-cols-2">
+            <div>
+              <h3 className="text-lg font-bold text-slate-900">
+                CheckFlow
+              </h3>
 
-            <a href="/terms" className="hover:underline">
-              利用規約
-            </a>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                ログイン不要・無料で使えるオンラインチェックリストサービスです。
+              </p>
+            </div>
 
-            <a href="/contact" className="hover:underline">
-              お問い合わせ
-            </a>
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-semibold text-slate-900">
+                  サービス
+                </h4>
+
+                <ul className="mt-3 space-y-2 text-sm">
+                  <li>
+                    <Link href="/" className="text-slate-600 hover:text-blue-600">
+                      トップページ
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/shopping-checklist" className="text-slate-600 hover:text-blue-600">
+                      買い物チェックリスト
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/travel-checklist" className="text-slate-600 hover:text-blue-600">
+                      旅行チェックリスト
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/moving-checklist" className="text-slate-600 hover:text-blue-600">
+                      引っ越しチェックリスト
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-slate-900">
+                  サポート
+                </h4>
+
+                <ul className="mt-3 space-y-2 text-sm">
+                  <li>
+                    <Link href="/privacy" className="text-slate-600 hover:text-blue-600">
+                      プライバシーポリシー
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/terms" className="text-slate-600 hover:text-blue-600">
+                      利用規約
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href="/contact" className="text-slate-600 hover:text-blue-600">
+                      お問い合わせ
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <p className="mt-4 text-center text-xs text-slate-400">
+          <p className="mt-10 text-center text-xs text-slate-500">
             © {new Date().getFullYear()} CheckFlow
           </p>
         </footer>

@@ -1,100 +1,36 @@
 "use client";
 
-import { getBrowserId } from "@/lib/browserId";
+import Link from "next/link";
+import { getBrowserId } from "@/src/lib/browserId";
 import { useEffect, useState } from "react";
-import TodoForm from "@/components/TodoForm";
-import TodoList from "@/components/TodoList";
-import { supabase } from "@/lib/supabase";
-import type { Todo } from "@/types/todo";
+import TodoForm from "@/src/components/TodoForm";
+import TodoList from "@/src/components/TodoList";
+import { supabase } from "@/src/lib/supabase";
+import type { Todo } from "@/src/types/todo";
+import ChecklistCard from "@/src/components/ChecklistCard";
+import { checklists } from "@/src/data/checklists";
+import { useTodos } from "@/src/hooks/useTodos";
 
 export default function Home() {
-const [text, setText] = useState("");
-const [todos, setTodos] = useState<Todo[]>([]);
-const [searchText, setSearchText] = useState("");
-const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
-const [editingId, setEditingId] = useState<number | null>(null);
-const [editingText, setEditingText] = useState("");
+  const [text, setText] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingText, setEditingText] = useState("");
+
+  const {
+    todos,
+    loadTodos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    updateTodo,
+    addTemplate,
+  } = useTodos();
 
   useEffect(() => {
     loadTodos();
   }, []);
-
-  async function loadTodos() {
-    const { data, error } = await supabase
-      .from("todos")
-      .select("*")
-      .eq("browser_id", getBrowserId())
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    setTodos(
-      (data ?? []).sort((a, b) => {
-        if (a.checked === b.checked) return 0;
-        return a.checked ? 1 : -1;
-      })
-    );
-  }
-
-async function addTodo() {
-  const value = text.trim();
-
-  if (!value) return;
-
-  const { data, error } = await supabase
-    .from("todos")
-    .insert({
-      text: value,
-      checked: false,
-      browser_id: getBrowserId(),
-    })
-    .select()
-    .single();
-
-  if (error) {
-    console.error(error);
-    alert("追加に失敗しました。");
-    return;
-  }
-
-  setTodos((prev) => [...prev, data]);
-  setText("");
-}
-
-  async function toggleTodo(todo: Todo) {
-    const { error } = await supabase
-      .from("todos")
-      .update({
-        checked: !todo.checked,
-      })
-      .eq("id", todo.id)
-      .eq("browser_id", getBrowserId());
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    loadTodos();
-  }
-
-  async function deleteTodo(id: number) {
-    const { error } = await supabase
-      .from("todos")
-      .delete()
-      .eq("id", id)
-      .eq("browser_id", getBrowserId());
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    loadTodos();
-  }
 
   async function deleteCompletedTodos() {
     const { error } = await supabase
@@ -106,32 +42,6 @@ async function addTodo() {
       console.error(error);
       return;
     }
-
-    loadTodos();
-  }
-
-  async function updateTodo() {
-    if (editingId === null) return;
-
-    const value = editingText.trim();
-
-    if (!value) return;
-
-    const { error } = await supabase
-      .from("todos")
-      .update({
-        text: value,
-      })
-      .eq("id", editingId)
-      .eq("browser_id", getBrowserId());
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    setEditingId(null);
-    setEditingText("");
 
     loadTodos();
   }
@@ -153,8 +63,8 @@ async function addTodo() {
       filter === "all"
         ? true
         : filter === "active"
-        ? !todo.checked
-        : todo.checked;
+          ? !todo.checked
+          : todo.checked;
 
     return matchText && matchFilter;
   });
@@ -230,16 +140,16 @@ async function addTodo() {
               項目を編集
             </h2>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <input
                 value={editingText}
                 onChange={(e) => setEditingText(e.target.value)}
-                className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
+                className="w-full flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
               />
 
               <button
                 onClick={updateTodo}
-                className="rounded-lg bg-green-600 px-5 py-2 font-semibold text-white hover:bg-green-700"
+                className="w-full rounded-lg bg-green-600 px-5 py-2 font-semibold text-white hover:bg-green-700 sm:w-auto"
               >
                 保存
               </button>
@@ -249,7 +159,7 @@ async function addTodo() {
                   setEditingId(null);
                   setEditingText("");
                 }}
-                className="rounded-lg bg-slate-300 px-5 py-2 font-semibold text-slate-900 hover:bg-slate-400"
+                className="w-full rounded-lg bg-slate-300 px-5 py-2 font-semibold text-slate-900 hover:bg-slate-400 sm:w-auto"
               >
                 キャンセル
               </button>
@@ -272,6 +182,21 @@ async function addTodo() {
           deleteTodo={deleteTodo}
           startEdit={startEdit}
         />
+
+        <div className="mt-8">
+          <h2 className="mb-4 text-xl font-bold text-slate-900">
+            よく使われるテンプレート
+          </h2>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {checklists.map((template) => (
+              <ChecklistCard
+                key={template.slug}
+                checklist={template}
+              />
+            ))}
+          </div>
+        </div>
 
         <section className="mt-12 border-t border-slate-300 pt-8">
           <h2 className="text-2xl font-bold text-slate-900">
@@ -301,6 +226,15 @@ async function addTodo() {
             <li>スマホ・PC対応</li>
             <li>シンプルで使いやすいデザイン</li>
           </ul>
+        </section>
+
+        <section className="mt-10">
+          <a
+            href="/templates"
+            className="inline-flex rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600"
+          >
+            テンプレートをもっと見る →
+          </a>
         </section>
       </div>
     </main>
