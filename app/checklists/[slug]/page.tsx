@@ -87,10 +87,10 @@ export default async function ChecklistPage({ params }: Props) {
                 </div>
 
                 <Link
-                    href={`/?template=${checklist.slug}`}
+                    href={`/?add=${checklist.slug}`}
                     className="mt-4 inline-flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
                 >
-                    無料で使ってみる
+                    このテンプレートを使う
                 </Link>
             </div>
         </main>
