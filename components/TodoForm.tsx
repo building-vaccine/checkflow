@@ -15,7 +15,7 @@ export default function TodoForm({
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="項目を入力"
-        className="flex-1 rounded-lg border px-4 py-3"
+        className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-500"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             addTodo();
