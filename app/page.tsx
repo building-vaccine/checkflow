@@ -185,28 +185,28 @@ async function addTodo() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="項目を検索..."
-            className="w-full rounded-lg border px-4 py-3"
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-500"
           />
         </div>
 
         <div className="mt-4 flex gap-2">
           <button
             onClick={() => setFilter("all")}
-            className="rounded-lg border px-3 py-2"
+            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
           >
             すべて
           </button>
 
           <button
             onClick={() => setFilter("active")}
-            className="rounded-lg border px-3 py-2"
+            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
           >
             未完了
           </button>
 
           <button
             onClick={() => setFilter("completed")}
-            className="rounded-lg border px-3 py-2"
+            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 hover:bg-slate-100"
           >
             完了
           </button>
