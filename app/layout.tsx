@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
   description: siteConfig.description,
 
-  keywords: siteConfig.keywords,
+  keywords: [...siteConfig.keywords],
 
   applicationName: siteConfig.name,
 

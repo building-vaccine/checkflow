@@ -1,9 +1,10 @@
 export const siteConfig = {
     name: "CheckFlow",
 
-    url: "https://checkflowjp.vercel.app/",
+    url: "https://checkflowjp.vercel.app",
 
-    description: "ログイン不要で使える無料のオンラインチェックリスト",
+    description:
+        "ログイン不要で使える無料のオンラインチェックリスト",
 
     locale: {
         og: "ja_JP",
@@ -12,7 +13,17 @@ export const siteConfig = {
 
     ogImage: "/opengraph-image.png",
 
+    author: "building-vaccine",
+
+    keywords: [
+        "チェックリスト",
+        "Todo",
+        "タスク管理",
+        "買い物リスト",
+        "旅行チェックリスト",
+    ],
+
     twitter: {
-        card: "summary_large_image",
+        card: "summary_large_image" as const,
     },
 } as const;
