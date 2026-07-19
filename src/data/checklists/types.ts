@@ -6,5 +6,6 @@ export type Checklist = {
     shortDescription: string;
     seoTitle: string;
     seoDescription: string;
+    featured: boolean,
     items: string[];
 };

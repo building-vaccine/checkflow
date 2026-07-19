@@ -23,6 +23,7 @@ export default function HomeClient({
     const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editingText, setEditingText] = useState("");
+    const featuredChecklists = checklists.filter((c) => c.featured);
 
     const {
         todos,
@@ -32,6 +33,7 @@ export default function HomeClient({
         deleteTodo,
         updateTodo,
         addTemplate,
+        clearTodos,
     } = useTodos();
 
     useEffect(() => {
@@ -162,7 +164,14 @@ export default function HomeClient({
                             />
 
                             <button
-                                onClick={updateTodo}
+                                onClick={async () => {
+                                    if (editingId === null) return;
+
+                                    await updateTodo(editingId, editingText);
+
+                                    setEditingId(null);
+                                    setEditingText("");
+                                }}
                                 className="w-full rounded-lg bg-green-600 px-5 py-2 font-semibold text-white hover:bg-green-700 sm:w-auto"
                             >
                                 保存
@@ -188,6 +197,12 @@ export default function HomeClient({
                     >
                         完了した項目を削除
                     </button>
+                    <button
+                        onClick={clearTodos}
+                        className="mt-4 rounded-lg border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    >
+                        リストをクリア
+                    </button>
                 </div>
 
                 <TodoList
@@ -203,7 +218,7 @@ export default function HomeClient({
                     </h2>
 
                     <div className="grid gap-4 sm:grid-cols-2">
-                        {checklists.map((template) => (
+                        {featuredChecklists.map((template) => (
                             <ChecklistCard
                                 key={template.slug}
                                 checklist={template}
@@ -211,6 +226,15 @@ export default function HomeClient({
                         ))}
                     </div>
                 </div>
+
+                <section className="mt-10">
+                    <a
+                        href="/templates"
+                        className="inline-flex rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600"
+                    >
+                        テンプレートをもっと見る →
+                    </a>
+                </section>
 
                 <section className="mt-12 border-t border-slate-300 pt-8">
                     <h2 className="text-2xl font-bold text-slate-900">
@@ -240,15 +264,6 @@ export default function HomeClient({
                         <li>スマホ・PC対応</li>
                         <li>シンプルで使いやすいデザイン</li>
                     </ul>
-                </section>
-
-                <section className="mt-10">
-                    <a
-                        href="/templates"
-                        className="inline-flex rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600"
-                    >
-                        テンプレートをもっと見る →
-                    </a>
                 </section>
             </div>
         </main>

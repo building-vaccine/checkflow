@@ -9,6 +9,7 @@ export const disasterChecklists: Checklist[] = [
         shortDescription: "災害への備えを確認できる防災チェックリスト",
         seoTitle: "防災チェックリスト",
         seoDescription: "無料で使える防災チェックリスト。非常食や避難用品など、災害への備えを確認できます。",
+        featured: true,
         items: [
             "飲料水",
             "非常食",

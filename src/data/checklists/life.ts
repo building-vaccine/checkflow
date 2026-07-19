@@ -9,6 +9,7 @@ export const lifeChecklists: Checklist[] = [
         shortDescription: "食品や日用品の買い忘れを防ぐ定番チェックリスト",
         seoTitle: "買い物チェックリスト",
         seoDescription: "無料で使える買い物チェックリスト。食品や日用品の買い忘れを防止できます。",
+        featured: true,
         items: [
             "牛乳",
             "卵",
@@ -50,6 +51,7 @@ export const lifeChecklists: Checklist[] = [
         shortDescription: "引っ越し準備や各種手続きを確認できるチェックリスト",
         seoTitle: "引っ越しチェックリスト",
         seoDescription: "無料で使える引っ越しチェックリスト。荷造りや住所変更などの準備をまとめて確認できます。",
+        featured: true,
         items: [
             "引っ越し業者を予約する",
             "荷造りを始める",
@@ -91,6 +93,7 @@ export const lifeChecklists: Checklist[] = [
         shortDescription: "年末や引っ越し前の大掃除に便利なチェックリスト",
         seoTitle: "大掃除チェックリスト",
         seoDescription: "無料で使える大掃除チェックリスト。掃除箇所を整理して効率よく進められます。",
+        featured: false,
         items: [
             "玄関",
             "靴箱",

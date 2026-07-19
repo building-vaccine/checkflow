@@ -9,6 +9,7 @@ export const healthChecklists: Checklist[] = [
         shortDescription: "入院時に必要な持ち物をまとめたチェックリスト",
         seoTitle: "入院チェックリスト",
         seoDescription: "無料で使える入院チェックリスト。入院時に必要な書類や生活用品を確認できます。",
+        featured: false,
         items: [
             "診察券",
             "保険証",
@@ -40,6 +41,7 @@ export const healthChecklists: Checklist[] = [
         shortDescription: "出産前に準備しておきたい持ち物チェックリスト",
         seoTitle: "出産準備チェックリスト",
         seoDescription: "無料で使える出産準備チェックリスト。赤ちゃん用品や入院準備をまとめて確認できます。",
+        featured: false,
         items: [
             "母子手帳",
             "健康保険証",

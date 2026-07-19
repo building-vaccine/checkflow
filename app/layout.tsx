@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { checklists } from "@/src/data/checklists";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -119,20 +120,8 @@ export default function RootLayout({
                   </li>
 
                   <li>
-                    <Link href="/shopping-checklist" className="text-slate-600 hover:text-blue-600">
-                      買い物チェックリスト
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link href="/travel-checklist" className="text-slate-600 hover:text-blue-600">
-                      旅行チェックリスト
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link href="/moving-checklist" className="text-slate-600 hover:text-blue-600">
-                      引っ越しチェックリスト
+                    <Link href="/templates" className="text-slate-600 hover:text-blue-600">
+                      テンプレート一覧
                     </Link>
                   </li>
                 </ul>

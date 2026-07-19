@@ -9,6 +9,7 @@ export const travelChecklists: Checklist[] = [
         shortDescription: "旅行前の持ち物を確認できる定番チェックリスト",
         seoTitle: "旅行チェックリスト",
         seoDescription: "無料で使える旅行チェックリスト。旅行前の持ち物や準備を簡単に確認できます。",
+        featured: true,
         items: [
             "財布",
             "スマートフォン",
@@ -50,6 +51,7 @@ export const travelChecklists: Checklist[] = [
         shortDescription: "キャンプ用品や持ち物を確認できるチェックリスト",
         seoTitle: "キャンプチェックリスト",
         seoDescription: "無料で使えるキャンプチェックリスト。テントや寝袋、調理器具など忘れ物防止に便利です。",
+        featured: true,
         items: [
             "テント",
             "タープ",

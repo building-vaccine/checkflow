@@ -1,14 +1,11 @@
 import { getBrowserId } from "@/src/lib/browserId";
-import { useEffect, useState } from "react";
 import { supabase } from "@/src/lib/supabase";
 import type { Todo } from "@/src/types/todo";
 import { checklists } from "@/src/data/checklists";
+import { useState } from "react";
 
 export function useTodos() {
     const [todos, setTodos] = useState<Todo[]>([]);
-    const [text, setText] = useState("");
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [editingText, setEditingText] = useState("");
 
     async function loadTodos() {
         const { data, error } = await supabase
@@ -30,20 +27,18 @@ export function useTodos() {
         );
     }
 
-    async function addTodo() {
+    async function addTodo(text: string) {
         const value = text.trim();
 
         if (!value) return;
 
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("todos")
             .insert({
                 text: value,
                 checked: false,
                 browser_id: getBrowserId(),
-            })
-            .select()
-            .single();
+            });
 
         if (error) {
             console.error(error);
@@ -51,8 +46,7 @@ export function useTodos() {
             return;
         }
 
-        setTodos((prev) => [...prev, data]);
-        setText("");
+        await loadTodos();
     }
 
     async function toggleTodo(todo: Todo) {
@@ -69,7 +63,7 @@ export function useTodos() {
             return;
         }
 
-        loadTodos();
+        await loadTodos();
     }
 
     async function deleteTodo(id: number) {
@@ -84,13 +78,11 @@ export function useTodos() {
             return;
         }
 
-        loadTodos();
+        await loadTodos();
     }
 
-    async function updateTodo() {
-        if (editingId === null) return;
-
-        const value = editingText.trim();
+    async function updateTodo(id: number, text: string) {
+        const value = text.trim();
 
         if (!value) return;
 
@@ -99,7 +91,7 @@ export function useTodos() {
             .update({
                 text: value,
             })
-            .eq("id", editingId)
+            .eq("id", id)
             .eq("browser_id", getBrowserId());
 
         if (error) {
@@ -107,10 +99,7 @@ export function useTodos() {
             return;
         }
 
-        setEditingId(null);
-        setEditingText("");
-
-        loadTodos();
+        await loadTodos();
     }
 
     const addTemplate = async (templateId: string) => {
@@ -144,6 +133,25 @@ export function useTodos() {
         await loadTodos();
     };
 
+    async function clearTodos() {
+        if (!confirm("チェックリストをすべて削除しますか？")) {
+            return;
+        }
+
+        const { error } = await supabase
+            .from("todos")
+            .delete()
+            .eq("browser_id", getBrowserId());
+
+        if (error) {
+            console.error(error);
+            alert("削除に失敗しました。");
+            return;
+        }
+
+        await loadTodos();
+    }
+
     return {
         todos,
         loadTodos,
@@ -152,6 +160,7 @@ export function useTodos() {
         deleteTodo,
         updateTodo,
         addTemplate,
+        clearTodos,
     };
 }
 

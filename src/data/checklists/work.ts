@@ -9,6 +9,7 @@ export const workChecklists: Checklist[] = [
         shortDescription: "出張前の持ち物や仕事道具を確認できるチェックリスト",
         seoTitle: "出張チェックリスト",
         seoDescription: "無料で使える出張チェックリスト。仕事道具や宿泊用品の忘れ物を防げます。",
+        featured: false,
         items: [
             "財布",
             "スマートフォン",
@@ -40,6 +41,7 @@ export const workChecklists: Checklist[] = [
         shortDescription: "新学期の準備を確認できるチェックリスト",
         seoTitle: "新学期チェックリスト",
         seoDescription: "無料で使える新学期チェックリスト。学校生活に必要な持ち物や準備を確認できます。",
+        featured: false,
         items: [
             "ランドセル",
             "教科書",
