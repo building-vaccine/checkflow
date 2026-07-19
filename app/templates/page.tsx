@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { checklists } from "@/src/data/checklists";
-import ChecklistCard from "@/src/components/ChecklistCard";
-import { categories } from "@/src/data/checklists/categories";
+import { checklistCategories } from "@/src/data/checklists";
+import TemplatesContent from "./TemplatesContent";
 
 export const metadata = {
     title: "テンプレート一覧",
@@ -9,7 +7,6 @@ export const metadata = {
 };
 
 export default function TemplatesPage() {
-
     return (
         <main className="min-h-screen bg-slate-100 px-6 py-12">
             <div className="mx-auto max-w-5xl">
@@ -21,26 +18,9 @@ export default function TemplatesPage() {
                     用途に合わせてチェックリストを選べます。
                 </p>
 
-                <div className="mt-8 space-y-12">
-                    {categories.map((category) => (
-                        <section key={category.id}>
-                            <h2 className="mb-4 text-2xl font-bold text-slate-900">
-                                {category.emoji} {category.name}
-                            </h2>
-
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                {checklists
-                                    .filter((c) => c.category === category.id)
-                                    .map((checklist) => (
-                                        <ChecklistCard
-                                            key={checklist.slug}
-                                            checklist={checklist}
-                                        />
-                                    ))}
-                            </div>
-                        </section>
-                    ))}
-                </div>
+                <TemplatesContent
+                    categories={checklistCategories}
+                />
             </div>
         </main>
     );
