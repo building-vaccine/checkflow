@@ -51,7 +51,7 @@ export const travelChecklists: Checklist[] = [
         shortDescription: "キャンプ用品や持ち物を確認できるチェックリスト",
         seoTitle: "キャンプチェックリスト",
         seoDescription: "無料で使えるキャンプチェックリスト。テントや寝袋、調理器具など忘れ物防止に便利です。",
-        featured: true,
+        featured: false,
         items: [
             "テント",
             "タープ",

@@ -192,16 +192,16 @@ export default function HomeClient({
 
                 <div className="mt-6 flex justify-end gap-2">
                     <button
-                        onClick={deleteCompletedTodos}
-                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
-                    >
-                        完了した項目を削除
-                    </button>
-                    <button
                         onClick={clearTodos}
                         className="mt-4 rounded-lg border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                     >
                         リストをクリア
+                    </button>
+                    <button
+                        onClick={deleteCompletedTodos}
+                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+                    >
+                        完了した項目を削除
                     </button>
                 </div>
 
