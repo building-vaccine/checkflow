@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { checklists } from "@/src/data/checklists";
+import { siteConfig } from "@/src/config/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,52 +17,52 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+
   title: {
-    default: "CheckFlow",
-    template: "%s | CheckFlow",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "無料で使えるシンプルなオンラインチェックリスト。買い物、旅行、引っ越しなどのタスク管理に最適です。",
-  keywords: [
-    "チェックリスト",
-    "Todo",
-    "タスク管理",
-    "買い物リスト",
-    "旅行チェックリスト",
-  ],
-  applicationName: "CheckFlow",
-  authors: [{ name: "building-vaccine" }],
+
+  description: siteConfig.description,
+
+  keywords: siteConfig.keywords,
+
+  applicationName: siteConfig.name,
+
+  authors: [{ name: siteConfig.author }],
+
   verification: {
     google: "VyGnAUfAjlUAgwsKAvp6BwKQNTe8OTzz0e2m_lArjKM",
   },
-  metadataBase: new URL("https://checkflow.vercel.app"),
+
   openGraph: {
-    title: "CheckFlow",
-    description:
-      "無料で使えるシンプルなオンラインチェックリスト。買い物、旅行、引っ越しなどのタスク管理に最適です。",
-    url: "https://checkflow.vercel.app",
-    siteName: "CheckFlow",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     images: [
       {
-        url: "/opengraph-image.png",
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "CheckFlow",
+        alt: siteConfig.name,
       },
     ],
-    locale: "ja_JP",
+    locale: siteConfig.locale.og,
     type: "website",
   },
+
   robots: {
     index: true,
     follow: true,
   },
+
   twitter: {
-    card: "summary_large_image",
-    title: "CheckFlow",
-    description:
-      "無料で使えるシンプルなオンラインチェックリスト。",
-    images: ["/opengraph-image.png"],
+    card: siteConfig.twitter.card,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 
@@ -159,6 +159,20 @@ export default function RootLayout({
             © {new Date().getFullYear()} CheckFlow
           </p>
         </footer>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              description: siteConfig.description,
+              inLanguage: siteConfig.locale.language.replace("_", "-"),
+            }),
+          }}
+        />
       </body>
     </html>
   );

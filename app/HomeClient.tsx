@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { getBrowserId } from "@/src/lib/browserId";
 import { useEffect, useState } from "react";
 import TodoForm from "@/src/components/TodoForm";
 import TodoList from "@/src/components/TodoList";
@@ -70,6 +68,11 @@ export default function HomeClient({
     const completedCount = todos.filter((todo) => todo.checked).length;
     const totalCount = todos.length;
 
+    const progress =
+        totalCount === 0
+            ? 0
+            : Math.round((completedCount / totalCount) * 100);
+
     const filteredTodos = todos.filter((todo) => {
         const matchText = todo.text
             .toLowerCase()
@@ -96,9 +99,22 @@ export default function HomeClient({
                     シンプルなチェックリスト
                 </p>
 
-                <p className="mt-2 text-sm text-slate-500">
-                    {totalCount}件中 {completedCount}件完了
-                </p>
+                <div className="mt-4">
+                    <div className="flex items-center justify-between text-sm text-slate-600">
+                        <span>
+                            {completedCount} / {totalCount} 完了
+                        </span>
+
+                        <span>{progress}%</span>
+                    </div>
+
+                    <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-200">
+                        <div
+                            className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                            style={{ width: `${progress}%` }}
+                        />
+                    </div>
+                </div>
 
                 <TodoForm
                     text={text}

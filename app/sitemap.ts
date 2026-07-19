@@ -1,40 +1,45 @@
 import type { MetadataRoute } from "next";
 import { checklists } from "@/src/data/checklists";
+import { siteConfig } from "@/src/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://checkflow.vercel.app";
-
   const pages: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
+      url: siteConfig.url,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${baseUrl}/privacy`,
+      url: `${siteConfig.url}/templates`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${siteConfig.url}/privacy`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/terms`,
+      url: `${siteConfig.url}/terms`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/contact`,
+      url: `${siteConfig.url}/contact`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
   ];
 
-  const checklistPages = checklists.map((checklist) => ({
-    url: `${baseUrl}/checklists/${checklist.slug}`,
+  const checklistPages: MetadataRoute.Sitemap = checklists.map((checklist) => ({
+    url: `${siteConfig.url}/checklists/${checklist.slug}`,
     lastModified: new Date(),
-    changeFrequency: "weekly" as const,
+    changeFrequency: "weekly",
     priority: 0.8,
   }));
 

@@ -1,13 +1,12 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/src/config/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://checkflow.vercel.app";
-
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }
